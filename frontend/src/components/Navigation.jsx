@@ -21,7 +21,6 @@ const Navigation = () => (
           {/* Prop with username to load username on login */}
           Nik Ackermann
         </a>
-
         <div class="navbar-dropdown is-right">
           <a class="navbar-item">
             {/* Link to settings component for user customization */}
