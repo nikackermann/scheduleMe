@@ -14,6 +14,13 @@ const Navigation = () => (
       </a>
       <a className="navbar-item">Profile</a>
       <a className="navbar-item">Schedule</a>
+      <div className="navbar-item">
+        <p className="field is-grouped">
+          <a class="button is-primary">
+            <span>Create</span>
+          </a>
+        </p>
+      </div>
     </div>
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable">
@@ -27,12 +34,10 @@ const Navigation = () => (
             Settings
           </a>
           <hr class="navbar-divider" />
-          <a className="navbar-item">
-            Logout
-          </a>
+          <a className="navbar-item">Logout</a>
         </div>
       </div>
-    </div>  
+    </div>
   </nav>
 );
 

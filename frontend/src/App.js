@@ -11,9 +11,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Login />
-        {/* <Navigation />
-        <Schedule /> */}
+        <Navigation />
+        <Schedule />
       </div>
     );
   }
