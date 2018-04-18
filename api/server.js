@@ -16,10 +16,16 @@ const connection = mysql.createConnection({
 });
 
 // Create connection to database
-connection.connect();
+connection.connect(error => {
+  if (error) {
+    throw error;
+  }
+  console.log('Mysql connection successful!');
+});
 
 // Create new express app
 const app = express();
+app.use(bodyParser.json());
 
 // tells passport to use GoogleStrategy
 // strategy in our program.
@@ -49,9 +55,19 @@ app.get('/auth/google/callback', passport.authenticate('google'));
 
 /// API Routes ///
 
-// Get courses list
-app.get('/users/:userId/:scheduleId', function(req, res) {
-  res.send(req.params);
+// get user
+app.get('/users/:userId', (req, res) => {
+  let sql = ``;
+});
+
+// create schedule
+app.get('/users/:userId/createSchedule', (req, res) => {
+
+});
+
+// add completed course
+app.get('/users/:userId/addCourse/:courseId', (req, res) => {
+
 });
 
 // check underlying environment

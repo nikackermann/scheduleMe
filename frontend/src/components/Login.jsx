@@ -9,25 +9,18 @@ const Login = () => (
           <div className="columns is-centered">
             <article className="card">
               <div className="card-content">
-                <img src={logo} className="login-logo" style={{ marginBottom: ".4em"}}/>
-                <div className="field">
-                  <div className="control">
-                    <input className="input" type="text" placeholder="Email" />
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="Password"
-                    />
-                  </div>
-                </div>
+                <img
+                  src={logo}
+                  className="login-logo"
+                  style={{ marginBottom: '.4em' }}
+                />
                 <div className="field">
                   <div className="control">
                     <button className="button is-primary is-fullwidth">
-                      Log-in
+                      <span class="icon is-medium">
+                        <i class="fab fa-google" />
+                      </span>
+                      <span>Login with Google</span>
                     </button>
                   </div>
                 </div>
