@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 const Profile = () => (
-  <div>
+  <div class="container is-fluid">
+    <p>This is demo text</p>
   </div>
 );
 

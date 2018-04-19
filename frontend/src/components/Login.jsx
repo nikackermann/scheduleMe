@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import logo from '../images/schoolits-logo.png';
+import { Link } from 'react-router-dom';
+
+import logo from '../images/logo.svg';
 
 const Login = () => (
   <div className="layout-default">
@@ -16,12 +18,14 @@ const Login = () => (
                 />
                 <div className="field">
                   <div className="control">
+                    <Link to="/profile">
                     <button className="button is-primary is-fullwidth">
                       <span class="icon is-medium">
                         <i class="fab fa-google" />
                       </span>
                       <span>Login with Google</span>
                     </button>
+                  </Link>
                   </div>
                 </div>
               </div>
