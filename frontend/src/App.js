@@ -12,7 +12,7 @@ import Profile from './components/Profile';
 // for the login portion of the application.
 const LoginContainer = () => (
   <div>
-    <Route exact path="/" component={Login} />
+    <Route exact path="/" render={() => <Login />} />
   </div>
 );
 
@@ -22,8 +22,8 @@ const LoginContainer = () => (
 const AppContainer = () => (
   <div>
     <Navigation />
-    <Route path="/profile" component={Profile} />
-    <Route path="/schedule" component={Schedule} />
+    <Route path="/profile" render={() => <Profile />} />
+    <Route path="/schedule" render={() => <Schedule />} />
   </div>
 );
 
@@ -32,10 +32,8 @@ class App extends Component {
     return(
     <BrowserRouter>
       <Switch>
-        <div>
-          <Route exact path="/" component={LoginContainer} />
-          <Route component={AppContainer} />
-        </div>
+        <Route exact path="/" render={() => LoginContainer()} />
+        <Route render={() => AppContainer()} />
       </Switch>
     </BrowserRouter>
     );

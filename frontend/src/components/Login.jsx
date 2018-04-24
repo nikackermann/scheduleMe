@@ -20,8 +20,8 @@ const Login = () => (
                   <div className="control">
                     <Link to="/profile">
                     <button className="button is-primary is-fullwidth">
-                      <span class="icon is-medium">
-                        <i class="fab fa-google" />
+                      <span className="icon is-medium">
+                        <i className="fab fa-google" />
                       </span>
                       <span>Login with Google</span>
                     </button>
