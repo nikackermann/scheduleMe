@@ -88,6 +88,27 @@ app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
   });
 });
 
+app.get('/getCompletedCourses/:studentId', (req, res) => {
+  let student_id = req.params.studentId;
+  let info = `SELECT * FROM completed_courses WHERE student_id = '${student_id}'`;
+  res.send(student_id);
+  connection.query(info, (error, result) => {
+    if(error) throw error;
+    res.json(result.map(className => className.short_name));
+  });
+
+});
+
+app.get('/getCourses', (req, res) => {
+  let get_courses = `SELECT DISTINCT short_name FROM courses WHERE short_name LIKE '%j%' `;
+  let query = connection.query(get_courses, (error, results) => {
+    if(error) throw error;
+    console.log(result);
+    res.send(result);
+  });
+
+});
+
 
 // check underlying environment
 // use provided port based on env.
