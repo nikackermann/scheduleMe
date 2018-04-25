@@ -1,11 +1,13 @@
 const express = require('express');
 const mysql = require('mysql');
+// importing config database data
 const config = require('./auth/config.json');
 
 // User authentication imports
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./auth/keys');
+const bodyParser = require('body-parser');
 
 // Database connection
 const connection = mysql.createConnection({
@@ -70,8 +72,25 @@ app.get('/users/:userId/addCourse/:courseId', (req, res) => {
 
 });
 
+// test PUT add completed course
+app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
+  // get completed course from request params.
+  let completedCourse = request.params.course;
+  let studentId = request.params.studentId;
+  // respond with completed course: http://localhost:5000/addCompletedCourse/acc200
+  response.send(completedCourse);
+  // created variable with insert sql statement
+  let insertSql = `INSERT INTO completed_courses (student_id, short_name) VALUES('${studentId}', '${completedCourse}')`;
+  // make sql query
+  let query = connection.query(insertSql, (error, result) => {
+    if (error) throw error;
+    console.log(result);
+  });
+});
+
+
 // check underlying environment
 // use provided port based on env.
 const PORT = process.env.PORT || 5000;
-
+console.log(PORT);
 app.listen(PORT);
