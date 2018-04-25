@@ -88,20 +88,21 @@ app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
   });
 });
 
-app.get('/getCompletedCourses/:studentId', (req, res) => {
-  let student_id = req.params.studentId;
+app.get('/getCompletedCourses/:studentId', (request, result) => {
+  let student_id = request.params.studentId;
   let info = `SELECT * FROM completed_courses WHERE student_id = '${student_id}'`;
-  res.send(student_id);
+  result.send(student_id);
   connection.query(info, (error, result) => {
     if(error) throw error;
-    res.json(result.map(className => className.short_name));
+    const data = result.map(shortName => shortName.short_name);
+    console.log(data);
   });
 
 });
 
-app.get('/getCourses', (req, res) => {
+app.get('/getCourses', (request, result) => {
   let get_courses = `SELECT DISTINCT short_name FROM courses WHERE short_name LIKE '%j%' `;
-  let query = connection.query(get_courses, (error, results) => {
+  let query = connection.query(get_courses, (error, result) => {
     if(error) throw error;
     console.log(result);
     res.send(result);
