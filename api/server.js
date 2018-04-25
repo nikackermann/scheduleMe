@@ -58,17 +58,12 @@ app.get('/auth/google/callback', passport.authenticate('google'));
 /// API Routes ///
 
 // get user
-app.get('/users/:userId', (req, res) => {
+app.get('/users/:email', (req, res) => {
   let sql = ``;
 });
 
 // create schedule
 app.get('/users/:userId/createSchedule', (req, res) => {
-
-});
-
-// add completed course
-app.get('/users/:userId/addCourse/:courseId', (req, res) => {
 
 });
 
@@ -101,13 +96,11 @@ app.get('/getCompletedCourses/:studentId', (request, result) => {
 });
 
 app.get('/getCourses', (request, result) => {
-  let get_courses = `SELECT DISTINCT short_name FROM courses WHERE short_name LIKE '%j%' `;
-  let query = connection.query(get_courses, (error, result) => {
+  let get_courses = `SELECT DISTINCT short_name FROM courses`;
+  connection.query(get_courses, (error, result) => {
     if(error) throw error;
     console.log(result);
-    res.send(result);
   });
-
 });
 
 
