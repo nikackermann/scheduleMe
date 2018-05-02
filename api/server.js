@@ -83,6 +83,7 @@ app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
   });
 });
 
+//get completed courses
 app.get('/getCompletedCourses/:studentId', (request, result) => {
   let student_id = request.params.studentId;
   let info = `SELECT * FROM completed_courses WHERE student_id = '${student_id}'`;
@@ -95,6 +96,7 @@ app.get('/getCompletedCourses/:studentId', (request, result) => {
 
 });
 
+ // get all courses
 app.get('/getCourses', (request, result) => {
   let get_courses = `SELECT DISTINCT short_name FROM courses`;
   connection.query(get_courses, (error, result) => {
@@ -102,6 +104,66 @@ app.get('/getCourses', (request, result) => {
     console.log(result);
   });
 });
+
+//get preferred instructors
+app.get('/getPreferredInstructors/:student_id', (request, result) => {
+  let student_id = request.params.student_id;
+  let instructor = `SELECT instructor FROM student_preferences WHERE student_id = '${student_id}'`;
+  result.send(student_id);
+  connection.query(instructor, (error, result) => {
+    if(error) throw error;
+    const data = result.map(prof => prof.instructor);
+    console.log(data);
+  });
+
+});
+
+//get preferred times
+app.get('/getPreferredTimes/:student_id', (request, result) => {
+  let student_id = request.params.student_id;
+  let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
+  result.send(student_id);
+  connection.query(times, (error, result) => {
+    if(error) throw error;
+    const data = result.map(t => t.preferred_time);
+    console.log(data);
+  });
+
+});
+
+//add preferred teachers
+app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) => {
+  // get pref prof from request params.
+  let preferred_instructor = request.params.instructor;
+  let studentId = request.params.student_id;
+  // respond with completed course: http://localhost:5000/addCompletedCourse/acc200
+  response.send(preferred_instructor);
+  // created variable with insert sql statement
+  let insertSql = `INSERT INTO student_preferences (student_id, instructor) VALUES('${studentId}', '${preferred_instructor}')`;
+  // make sql query
+  let query = connection.query(insertSql, (error, result) => {
+    if (error) throw error;
+    console.log(result);
+  });
+});
+
+// add preferred time
+app.get('/addPreferredTime/:studentId/:preferred_time', (request, response) => {
+  // get completed course from request params.
+  let preferred_time = request.params.preferred_time;
+  let studentId = request.params.student_id;
+  // respond with pref time: http://localhost:5000/addCompletedCourse/acc200
+  response.send(preffered_time);
+  // created variable with insert sql statement
+  let insertSql = `INSERT INTO student_preferences (student_id, preferred_time) VALUES('${studentId}', '${preferred_time}')`;
+  // make sql query
+  let query = connection.query(insertSql, (error, result) => {
+    if (error) throw error;
+    console.log(result);
+  });
+});
+
+
 
 
 // check underlying environment
