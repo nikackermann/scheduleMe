@@ -144,69 +144,75 @@ const Profile = () => (
       </div>
     </div>
 
-      <div className="tile is-6 is-parent">
+      <div className="tile is-8 is-vertical is-parent">
         <div className="tile is-child box">
           <p className="title is-4">Let's talk about you</p>
           <p>
             In order to maximize the potential for the best fitting schedule, we
             need to know a little bit more about your preferences.{' '}
-          </p> <br></br>
-
-          <div class="columns">
-            <div class="column">
-                <div class="field">
+            </p> <br></br>
+            <div class="columns">
+              <div class="column is-two-fifths">
                   <label class="label">Time Availability</label>
-                  <label class="checkbox"><input type="checkbox"/>Morning</label><br></br>
-                  <label class="checkbox"><input type="checkbox"/>Afternoon</label><br></br>
-                  <label class="checkbox"><input type="checkbox"/>Evening</label><br></br>
-                </div>
-
-              <div class="field">
-                <label class="label">Day Availiability</label>
-                <label class="checkbox"><input type="checkbox"/>Monday</label><br></br>
-                <label class="checkbox"><input type="checkbox"/>Tuesday</label><br></br>
-                <label class="checkbox"><input type="checkbox"/>Wednesday</label><br></br>
-                <label class="checkbox"><input type="checkbox"/>Thursday</label><br></br>
-                <label class="checkbox"><input type="checkbox"/>Friday</label><br></br>
-                <label class="checkbox"><input type="checkbox"/>Saturday</label>
+                  <label class="checkbox"><input type="checkbox"/> Morning</label><br></br>
+                  <label class="checkbox"><input type="checkbox"/> Afternoon</label><br></br>
+                  <label class="checkbox"><input type="checkbox"/> Evening</label><br></br>
               </div>
+              <div class="column2 is-two-fifths">
+                <label class="label">Day Availiability</label>
+                <label class="checkbox"><input type="checkbox"/> Monday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/> Tuesday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/> Wednesday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/> Thursday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/> Friday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/> Saturday</label>
+                </div>
+            </div>
+            <div class="buttons has-addons">
+            <p class="control">
+            <a class="button is-primary">Submit</a>
+            </p>
+            <p class="control">
+              <a class="button is-light">Cancel</a>
+            </p>
             </div>
 
-            <div class="column">
-              <div class="column2">
-              <div class="field">
-              <label class="label">Preferred Professors(optional)</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="i.e. John Doe" />
-              </div>
+            </div>
+
+          <div className="tile is-child box">
+          <p className="title is-4">Preferred Professors</p>
+              <div class="field has-addons">
+                <div class="control">
+                  <input class="input" type="text" placeholder="i.e. John Doe"/>
+                  </div>
+                  <div class="control">
+                    <a class="button is-info">
+                    Add
+                    </a>
+                  </div>
+                </div>
+            
               <p class="help">Professor you would like to take again</p>
               </div>
 
-              <div class="field">
-                <label class="label">Courses Taken</label>
+            <div className="tile is-child box">
+                <p className="title is-4">Completed Courses</p>
+                <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder="i.e. CSC 424" />
-                </div>
+                  <input class="input" type="text" placeholder="i.e. CSC 424"/>
+                  </div>
+                  <div class="control">
+                    <a class="button is-info">
+                    Add
+                    </a>
+                  </div>
+              </div>
                 <p class="help">Courses already taken</p>
               </div>
             </div>
           </div>
         </div>
 
-          
-          <div class="field is-grouped">
-            <p class="control">
-              <a class="button is-primary">Submit</a>
-            </p>
-            <p class="control">
-              <a class="button is-light">Cancel</a>
-            </p>
-          </div> 
-
-        </div>
-      </div>
-      </div>
-  </div>
 );
 
 export default Profile;
