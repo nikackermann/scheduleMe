@@ -148,8 +148,12 @@ app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) =>
 });
 
 // add preferred time
-app.get('/addPreferredTime/:studentId/:preferred_time', (request, response) => {
+app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
   // get completed course from request params.
+  const morning = request.params.morning;
+  const afternoon = request.params.afternoon;
+  const evening = request.params.evening;
+
   let preferred_time = request.params.preferred_time;
   let studentId = request.params.student_id;
   // respond with pref time: http://localhost:5000/addCompletedCourse/acc200
@@ -163,8 +167,9 @@ app.get('/addPreferredTime/:studentId/:preferred_time', (request, response) => {
   });
 });
 
+app.get('getPreferredTime/:studentId/:preferred_time'), (request, response) => {
 
-
+}
 
 // check underlying environment
 // use provided port based on env.
