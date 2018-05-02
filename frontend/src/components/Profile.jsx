@@ -17,13 +17,10 @@ const Profile = () => (
           <p className="title is-4">Progress</p>
           <p>
             <p>Estimated Progress Towards Graduation</p>
-            <br />
-            <progress className="progress is-primary" value="15" max="100">
-              30%
-            </progress>
+            <br/>
+            <progress className="progress is-primary" value="15" max="100">30%</progress>
           </p>
         </div>
-
         <div className="tile is-child box">
           <p className="title is-4">Preferences</p>
           <p>
@@ -32,16 +29,14 @@ const Profile = () => (
                 <button
                   class="button"
                   aria-haspopup="true"
-                  aria-controls="dropdown-menu"
-                >
+                  aria-controls="dropdown-menu">
                   <span>Professors</span>
                 </button>
               </div>
+
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    Dr. Lancor
-                  </a>
+                  <a href="#" class="dropdown-item">Dr. Lancor</a>
                   <a class="dropdown-item">Dr. Antonios</a>
                 </div>
               </div>
@@ -52,17 +47,14 @@ const Profile = () => (
                 <button
                   class="button"
                   aria-haspopup="true"
-                  aria-controls="dropdown-menu"
-                >
+                  aria-controls="dropdown-menu">
                   <span>Times</span>
                 </button>
               </div>
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    5:00pm-7:00pm
-                  </a>
-                  <a class="dropdown-item">4:45pm-6:00pm</a>
+                  <a href="#" class="dropdown-item">Morning</a>
+                  <a class="dropdown-item">Afternoon</a>
                 </div>
               </div>
             </div>
@@ -72,25 +64,22 @@ const Profile = () => (
                 <button
                   class="button"
                   aria-haspopup="true"
-                  aria-controls="dropdown-menu"
-                >
+                  aria-controls="dropdown-menu">
                   <span>Days</span>
                 </button>
               </div>
+
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    Monday
-                  </a>
+                  <a href="#" class="dropdown-item">Monday</a>
                   <a class="dropdown-item">Wednesday</a>
                   <a class="dropdown-item">Friday</a>
                 </div>
               </div>
             </div>
-          </p>
-        </div>
-
-        <div className="tile is-child box">
+            </p>
+      </div>
+      <div className="tile is-child box">
           <p className="title is-4">Completed Courses</p>
           <p>
             <div class="dropdown is-hoverable">
@@ -138,82 +127,85 @@ const Profile = () => (
                 <button
                   class="button"
                   aria-haspopup="true"
-                  aria-controls="dropdown-menu"
-                >
+                  aria-controls="dropdown-menu">
                   <span>Physics</span>
                 </button>
               </div>
+
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    PHY 200{' '}
-                  </a>
+                  <a href="#" class="dropdown-item">PHY 200{' '}</a>
                   <a class="dropdown-item">PHY 201</a>
                   <a class="dropdown-item">PHY 230</a>
                 </div>
               </div>
             </div>
           </p>
-        </div>
       </div>
+    </div>
 
-      <div className="tile is-parent">
+      <div className="tile is-6 is-parent">
         <div className="tile is-child box">
           <p className="title is-4">Let's talk about you</p>
           <p>
             In order to maximize the potential for the best fitting schedule, we
             need to know a little bit more about your preferences.{' '}
-          </p>
+          </p> <br></br>
 
-          <div class="field">
-            <label class="label">Preferred Professors</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="i.e. John Doe" />
-            </div>
-            <p class="help">Professor you would like to take again</p>
-          </div>
+          <div class="columns">
+            <div class="column">
+                <div class="field">
+                  <label class="label">Time Availability</label>
+                  <label class="checkbox"><input type="checkbox"/>Morning</label><br></br>
+                  <label class="checkbox"><input type="checkbox"/>Afternoon</label><br></br>
+                  <label class="checkbox"><input type="checkbox"/>Evening</label><br></br>
+                </div>
 
-          <div class="field">
-            <label class="label">Professors to Avoid</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="i.e. John Doe" />
+              <div class="field">
+                <label class="label">Day Availiability</label>
+                <label class="checkbox"><input type="checkbox"/>Monday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/>Tuesday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/>Wednesday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/>Thursday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/>Friday</label><br></br>
+                <label class="checkbox"><input type="checkbox"/>Saturday</label>
+              </div>
             </div>
-            <p class="help">Professor you would not like to take again</p>
-          </div>
 
-          <div class="field">
-            <label class="label">Availablility</label>
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                placeholder="i.e. 5:00pm-7:00pm"
-              />
-            </div>
-            <p class="help">Class times you can attend</p>
-          </div>
+            <div class="column">
+              <div class="column2">
+              <div class="field">
+              <label class="label">Preferred Professors(optional)</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="i.e. John Doe" />
+              </div>
+              <p class="help">Professor you would like to take again</p>
+              </div>
 
-          <div class="field">
-            <label class="label">Preferred Day</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="i.e. Monday" />
+              <div class="field">
+                <label class="label">Courses Taken</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="i.e. CSC 424" />
+                </div>
+                <p class="help">Courses already taken</p>
+              </div>
             </div>
-            <p class="help">Class days you can attend</p>
-          </div>
-
-          <div class="field">
-            <label class="label">Courses Taken</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="i.e. CSC 424" />
-            </div>
-            <p class="help">Courses already taken</p>
-          </div>
-          <div className="control">
-            <button className="button is-primary">Submit</button>
           </div>
         </div>
+
+          
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="button is-primary">Submit</a>
+            </p>
+            <p class="control">
+              <a class="button is-light">Cancel</a>
+            </p>
+          </div> 
+
+        </div>
       </div>
-    </div>
+      </div>
   </div>
 );
 
