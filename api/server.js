@@ -128,10 +128,9 @@ app.get('/getPreferredTimes/:student_id', (request, result) => {
     const data = result.map(t => t.preferred_time);
     console.log(data);
   });
-
 });
 
-//add preferred teachers
+// add preferred teachers
 app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) => {
   // get pref prof from request params.
   let preferred_instructor = request.params.instructor;
@@ -157,7 +156,7 @@ app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
   let preferred_time = request.params.preferred_time;
   let studentId = request.params.student_id;
   // respond with pref time: http://localhost:5000/addCompletedCourse/acc200
-  response.send(preffered_time);
+  response.send(preferred_time);
   // created variable with insert sql statement
   let insertSql = `INSERT INTO student_preferences (student_id, preferred_time) VALUES('${studentId}', '${preferred_time}')`;
   // make sql query
@@ -167,9 +166,21 @@ app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
   });
 });
 
-app.get('getPreferredTime/:studentId/:preferred_time'), (request, response) => {
+//get preferred times
+app.get('/getPreferredTimes/:student_id', (request, result) => {
+  let student_id = request.params.student_id;
+  let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
+  result.send(student_id);
+  connection.query(times, (error, result) => {
+    if(error) throw error;
+    const data = result.map(t => t.preferred_time);
+    console.log(data);
+  });
+});
 
-}
+// get days of the week // 
+
+// get time of day // 
 
 // check underlying environment
 // use provided port based on env.
