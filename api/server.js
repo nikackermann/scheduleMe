@@ -130,10 +130,9 @@ app.get('/getPreferredTimes/:student_id', (request, result) => {
   });
 });
 
-
-//!!!!!!!!!!!!!!!  CHANGE INSERT TO UPDATE !!!!!!!!!!!!!!!!!!!!!!!!!!/
-
 // add preferred teachers
+
+//update
 app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) => {
   // get pref prof from request params.
   let preferred_instructor = request.params.instructor;
@@ -148,7 +147,6 @@ app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) =>
     console.log(result);
   });
 });
-
 
 // add preferred time
 app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
@@ -170,7 +168,6 @@ app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
   });
 });
 
-
 //get preferred times
 app.get('/getPreferredTimes/:student_id', (request, result) => {
   let student_id = request.params.student_id;
@@ -183,9 +180,10 @@ app.get('/getPreferredTimes/:student_id', (request, result) => {
   });
 });
 
-//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
 // get days of the week // 
-//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
+
+
+
 // get time of day // 
 
 // check underlying environment
