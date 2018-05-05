@@ -130,9 +130,10 @@ app.get('/getPreferredTimes/:student_id', (request, result) => {
   });
 });
 
-// add preferred teachers
 
-//update
+//!!!!!!!!!!!!!!!  CHANGE INSERT TO UPDATE !!!!!!!!!!!!!!!!!!!!!!!!!!/
+
+// add preferred teachers
 app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) => {
   // get pref prof from request params.
   let preferred_instructor = request.params.instructor;
@@ -147,6 +148,7 @@ app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) =>
     console.log(result);
   });
 });
+
 
 // add preferred time
 app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
@@ -168,6 +170,7 @@ app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
   });
 });
 
+
 //get preferred times
 app.get('/getPreferredTimes/:student_id', (request, result) => {
   let student_id = request.params.student_id;
@@ -180,10 +183,24 @@ app.get('/getPreferredTimes/:student_id', (request, result) => {
   });
 });
 
-// get days of the week // 
-
-
-
+//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
+// get days of the week //
+app.get('/getDaysOfWeek/:student_id', (request, result) => {
+  let student_id = request.params.student_id;
+  let monday = `SELECT monday FROM student_preferences WHERE student_id = '${student_id}'`;
+  let tuesday = `SELECT tuesday FROM student_preferences WHERE student_id = '${student_id}'`;
+  let wednesday = `SELECT wednesday FROM student_preferences WHERE student_id = '${student_id}'`;
+  let thursday = `SELECT thursday FROM student_preferences WHERE student_id = '${student_id}'`;
+  let friday = `SELECT friday FROM student_preferences WHERE student_id = '${student_id}'`;
+  let saturday = `SELECT saturday FROM student_preferences WHERE student_id = '${student_id}'`;
+  result.send(student_id);
+  connection.query((monday, tuesday, wednesday, thursday, friday, saturday), (error, result) => {
+    if(error) throw error;
+    const data = result.map(t => t.monday);
+    console.log(data);
+  });
+});
+//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
 // get time of day // 
 
 // check underlying environment
