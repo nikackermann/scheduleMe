@@ -137,7 +137,7 @@ app.get('/updatePreferredInstructor/:studentId/:instructor', (request, response)
   let studentId = request.params.student_id;
   let insertSql = `UPDATE student_preferences SET instructor = '${preferred_instructor}' WHERE student_id = '${studentId}'`;
   // make sql query
-  let query = connection.query(insertSql, (error, result) => {
+  let query = connection.query('UPDATE student_preferences SET ? WHERE ?', [{ instructor: preferred_instructor }, {student_id: studentId }], (error, result) => {
     if (error) throw error;
     console.log(result);
     response.send(preferred_instructor);
@@ -170,8 +170,8 @@ app.get('/addPreferredTimeOfDay/:studentId/:morning/:afternoon/:evening', (reque
   let studentId = request.params.student_id;
   response.send('successfully inserted times of day');
 
-  let insertSql = `INSERT INTO student_preferences (student_id, morning, afternoon, evening) VALUES('${studentId}','${morn}', '${noon}', '${eve}')`;
-  let query = connection.query(insertSql, (error, result) => {
+  let insertSql = `INSERT INTO student_preferences (morning, afternoon, evening) VALUES('${morn}', '${noon}', '${eve}') WHERE student_id = '${studentId}'`;
+  connection.query(insertSql, (error, result) => {
     if (error) throw error;
     console.log(result);
 
