@@ -105,8 +105,8 @@ app.get('/getCourses', (request, result) => {
   });
 });
 
-//get preferred instructors
-app.get('/getPreferredInstructors/:student_id', (request, result) => {
+//get preferred instructor
+app.get('/getPreferredInstructor/:student_id', (request, result) => {
   let student_id = request.params.student_id;
   let instructor = `SELECT instructor FROM student_preferences WHERE student_id = '${student_id}'`;
   result.send(student_id);
@@ -118,90 +118,109 @@ app.get('/getPreferredInstructors/:student_id', (request, result) => {
 
 });
 
-//get preferred times
-app.get('/getPreferredTimes/:student_id', (request, result) => {
-  let student_id = request.params.student_id;
-  let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
-  result.send(student_id);
-  connection.query(times, (error, result) => {
-    if(error) throw error;
-    const data = result.map(t => t.preferred_time);
-    console.log(data);
-  });
-});
+// //get preferred times
+// app.get('/getPreferredTimes/:student_id', (request, result) => {
+//   let student_id = request.params.student_id;
+//   let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
+//   result.send(student_id);
+//   connection.query(times, (error, result) => {
+//     if(error) throw error;
+//     const data = result.map(t => t.preferred_time);
+//     console.log(data);
+//   });
+// });
 
-
-//!!!!!!!!!!!!!!!  CHANGE INSERT TO UPDATE !!!!!!!!!!!!!!!!!!!!!!!!!!/
-
-// add preferred teachers
-app.get('/addPreferredInstructor/:studentId/:instructor', (request, response) => {
-  // get pref prof from request params.
+// UPDATE preferred teacher
+//limit one per student
+app.get('/updatePreferredInstructor/:studentId/:instructor', (request, response) => {
   let preferred_instructor = request.params.instructor;
   let studentId = request.params.student_id;
-  // respond with completed course: http://localhost:5000/addCompletedCourse/acc200
-  response.send(preferred_instructor);
-  // created variable with insert sql statement
-  let insertSql = `INSERT INTO student_preferences (student_id, instructor) VALUES('${studentId}', '${preferred_instructor}')`;
+  let insertSql = `UPDATE student_preferences SET instructor = '${preferred_instructor}' WHERE student_id = '${studentId}'`;
   // make sql query
   let query = connection.query(insertSql, (error, result) => {
     if (error) throw error;
     console.log(result);
+    response.send(preferred_instructor);
+
   });
 });
 
 
-// add preferred time
-app.get('/addPreferredTime/:studentId/preferences', (request, response) => {
-  // get completed course from request params.
-  const morning = request.params.morning;
-  const afternoon = request.params.afternoon;
-  const evening = request.params.evening;
+// add preferred time of day 
+// app.get('/addPreferredTimeOfDay/:studentId/preferences', (request, response) => {
+//   let morning = request.params.morning;
+//   let afternoon = request.params.afternoon;
+//   let evening = request.params.evening;
 
-  let preferred_time = request.params.preferred_time;
+//   //let preferred_time = request.params.preferred_time;
+//   let studentId = request.params.student_id;
+//   response.send(preferred_time);
+//   let insertSql = `INSERT INTO student_preferences (morning, afternoon, evening) VALUES('${studentId}', '${preferred_time}')`;
+//   let query = connection.query(insertSql, (error, result) => {
+//     if (error) throw error;
+//     console.log(result);
+//   });
+// });
+
+//add prefered times of day 
+app.get('/addPreferredTimeOfDay/:studentId/:morning/:afternoon/:evening', (request, response) => {
+  let morn = request.params.morning;
+  let noon = request.params.afternoon;
+  let eve = request.params.evening;
   let studentId = request.params.student_id;
-  // respond with pref time: http://localhost:5000/addCompletedCourse/acc200
-  response.send(preferred_time);
-  // created variable with insert sql statement
-  let insertSql = `INSERT INTO student_preferences (student_id, preferred_time) VALUES('${studentId}', '${preferred_time}')`;
-  // make sql query
+  response.send('successfully inserted times of day');
+
+  let insertSql = `INSERT INTO student_preferences (student_id, morning, afternoon, evening) VALUES('${studentId}','${morn}', '${noon}', '${eve}')`;
   let query = connection.query(insertSql, (error, result) => {
     if (error) throw error;
     console.log(result);
+
   });
 });
 
 
-//get preferred times
-app.get('/getPreferredTimes/:student_id', (request, result) => {
-  let student_id = request.params.student_id;
-  let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
-  result.send(student_id);
-  connection.query(times, (error, result) => {
-    if(error) throw error;
-    const data = result.map(t => t.preferred_time);
-    console.log(data);
-  });
-});
+//don't think we will need: 
+// //get preferred times
+// app.get('/getPreferredTimes/:student_id', (request, result) => {
+//   let student_id = request.params.student_id;
+//   let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
+//   result.send(student_id);
+//   connection.query(times, (error, result) => {
+//     if(error) throw error;
+//     const data = result.map(t => t.preferred_time);
+//     console.log(data);
+//   });
+// });
 
-//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
+
 // get days of the week //
 app.get('/getDaysOfWeek/:student_id', (request, result) => {
   let student_id = request.params.student_id;
-  let monday = `SELECT monday FROM student_preferences WHERE student_id = '${student_id}'`;
-  let tuesday = `SELECT tuesday FROM student_preferences WHERE student_id = '${student_id}'`;
-  let wednesday = `SELECT wednesday FROM student_preferences WHERE student_id = '${student_id}'`;
-  let thursday = `SELECT thursday FROM student_preferences WHERE student_id = '${student_id}'`;
-  let friday = `SELECT friday FROM student_preferences WHERE student_id = '${student_id}'`;
-  let saturday = `SELECT saturday FROM student_preferences WHERE student_id = '${student_id}'`;
-  result.send(student_id);
-  connection.query((monday, tuesday, wednesday, thursday, friday, saturday), (error, result) => {
+  let days = `SELECT monday, tuesday, wednesday, thursday, friday, saturday FROM student_preferences WHERE student_id = '${student_id}'`;
+
+  connection.query(days, (error, result) => {
     if(error) throw error;
-    const data = result.map(t => t.monday);
-    console.log(data);
+    //const data = result.map(t => t.days);
+    console.log(result);
+    result.send(student_id);
+
   });
 });
-//!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!/
-// get time of day // 
+
+// get times of day // 
+app.get('/getTimeOfDay/:student_id', (request, result) => {
+  let student_id = request.params.student_id;
+  let tod = `SELECT morning, afternoon, evening FROM student_preferences WHERE student_id = '${student_id}'`;
+  
+  connection.query(tod, (error, result) => {
+    if(error) throw error;
+    //const data = result.map(t => t.tod);
+    console.log(result);
+    result.send(student_id);
+
+  });
+});
+
 
 // check underlying environment
 // use provided port based on env.
