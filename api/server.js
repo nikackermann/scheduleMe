@@ -27,6 +27,9 @@ connection.connect(error => {
 
 // Create new express app
 const app = express();
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 // tells passport to use GoogleStrategy
@@ -53,29 +56,61 @@ app.get(
   })
 );
 
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
 app.get('/auth/google/callback', passport.authenticate('google'));
 
-/// API Routes ///
+const semester1 = ['CSC 152', 'MAT 112', 'ENG 110', 'INQ 101'];
+// const semester2 = ['CSC 212', 'MAT 122', 'ENG 112', 'SPA 101'];
+// const semester3 = ['CSC 207', 'CSC 235', 'MAT 150', 'SPA 200'];
+// const semester4 = ['CSC 265', 'CSC 229', 'MAT 178', 'MAT 151'];
+// const semester5 = ['CSC 321', 'CSC 324', 'CSC 305', 'PHY 200'];
+// const semester6 = ['CSC 330', 'PHY 201']
 
-// get user
-app.get('/users/:email', (req, res) => {
-  let sql = ``;
-});
+// let test = (result) => {
+//   let list = [];
+//   list.push(result);
+//   console.log(list)
+// }
 
 // create schedule
-app.get('/users/:userId/createSchedule', (req, res) => {
-
+app.get('/:userId/createSchedule', (req, res) => {
+  let studentId = req.params.studentId;
+  let sql = `SELECT * FROM courses WHERE short_name IN ('CSC 152', 'MAT 112', 'ENG 110', 'INQ 101')`;
+  let query = connection.query(sql, (error, result) => {
+    if (error) throw error;
+    console.log(result);
+    res.send(result);
+  })
 });
 
+
 // test PUT add completed course
-app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
+app.post('/addCompletedCourse/:studentId/', (request, response) => {
   // get completed course from request params.
-  let completedCourse = request.params.course;
+  let course = request.body.completedCourse;
   let studentId = request.params.studentId;
   // respond with completed course: http://localhost:5000/addCompletedCourse/acc200
-  response.send(completedCourse);
+  response.send(request.body);
   // created variable with insert sql statement
-  let insertSql = `INSERT INTO completed_courses (student_id, short_name) VALUES('${studentId}', '${completedCourse}')`;
+  let insertSql = `INSERT INTO completed_courses (student_id, short_name) VALUES('${studentId}', '${course}')`;
   // make sql query
   let query = connection.query(insertSql, (error, result) => {
     if (error) throw error;
@@ -83,37 +118,67 @@ app.get('/addCompletedCourse/:studentId/:course', (request, response) => {
   });
 });
 
+app.get('/getTimes/:studentId', (req, res) => {
+  let studentId = req.params.studentId;
+  let info = `SELECT morning, afternoon, evening, monday, tuesday, wednesday, thursday, friday, saturday FROM student_preferences WHERE student_id = '${studentId}'`;
+  let query = connection.query(info, (error, result) => {
+    if (error) throw error;
+    res.send(result);
+  });
+})
+
+app.post('/addTimes/:studentId/', (req, res) => {
+  let times = req.body;
+  let studentId = req.params.studentId;
+  console.log(times.morning)
+  res.send(times)
+  let insertSql = `UPDATE student_preferences SET morning = '${~~req.body.morning}', afternoon = '${~~req.body.afternoon}', evening = '${~~req.body.evening}', monday = '${~~req.body.monday}', tuesday = '${~~req.body.tuesday}', wednesday = '${~~req.body.wednesday}', thursday = '${~~req.body.thursday}', friday = '${~~req.body.friday}', saturday = '${~~req.body.saturday}'  WHERE student_id = '${studentId}'`;
+  let query = connection.query(insertSql, (error, result) => {
+    if (error) throw error;
+    console.log(result);
+  });
+});
+
 //get completed courses
-app.get('/getCompletedCourses/:studentId', (request, result) => {
-  let student_id = request.params.studentId;
+app.get('/getCompletedCourses/:studentId', (req, res) => {
+  let student_id = req.params.studentId;
   let info = `SELECT * FROM completed_courses WHERE student_id = '${student_id}'`;
-  result.send(student_id);
-  connection.query(info, (error, result) => {
+  let query = connection.query(info, (error, result) => {
     if(error) throw error;
     const data = result.map(shortName => shortName.short_name);
-    console.log(data);
+    const newSet = [...new Set(data)]
+    res.send(newSet);
   });
 
 });
 
  // get all courses
-app.get('/getCourses', (request, result) => {
+app.get('/courses', (req, res) => {
   let get_courses = `SELECT DISTINCT short_name FROM courses`;
-  connection.query(get_courses, (error, result) => {
+  let query = connection.query(get_courses, (error, result) => {
     if(error) throw error;
-    console.log(result);
+    let courses = result.map(course => course.short_name);
+    res.send(courses);
   });
 });
 
+app.get('/instructors', (req, res) => {
+  let getInstructors = `SELECT DISTINCT instructor FROM courses`;
+  let query = connection.query(getInstructors, (error, result) => {
+    if (error) throw error;
+    let instructors = result.map(prof => prof.instructor);
+    res.send(instructors);
+  });
+})
+
 //get preferred instructor
-app.get('/getPreferredInstructor/:student_id', (request, result) => {
-  let student_id = request.params.student_id;
+app.get('/getPreferredInstructors/:student_id', (req, res) => {
+  let student_id = req.params.student_id;
   let instructor = `SELECT instructor FROM student_preferences WHERE student_id = '${student_id}'`;
-  result.send(student_id);
   connection.query(instructor, (error, result) => {
     if(error) throw error;
     const data = result.map(prof => prof.instructor);
-    console.log(data);
+    res.send(data);
   });
 
 });
@@ -132,16 +197,16 @@ app.get('/getPreferredInstructor/:student_id', (request, result) => {
 
 // UPDATE preferred teacher
 //limit one per student
-app.get('/updatePreferredInstructor/:studentId/:instructor', (request, response) => {
-  let preferred_instructor = request.params.instructor;
-  let studentId = request.params.student_id;
-  let insertSql = `UPDATE student_preferences SET instructor = '${preferred_instructor}' WHERE student_id = '${studentId}'`;
+app.post('/updatePreferredInstructor/:studentId/', (req, res) => {
+  let instructor = req.body.preferredInstructor;
+  console.log(req.body)
+  let student_id = 1;
+  let insertSql = `UPDATE student_preferences SET instructor = '${instructor}' WHERE student_id = '${student_id}'`;
   // make sql query
-  let query = connection.query('UPDATE student_preferences SET ? WHERE ?', [{ instructor: preferred_instructor }, {student_id: studentId }], (error, result) => {
+  res.send(instructor);
+  let query = connection.query('UPDATE student_preferences SET ? WHERE ?', [{ instructor: instructor }, {student_id: student_id }], (error, result) => {
     if (error) throw error;
     console.log(result);
-    response.send(preferred_instructor);
-
   });
 });
 
@@ -177,21 +242,6 @@ app.get('/addPreferredTimeOfDay/:studentId/:morning/:afternoon/:evening', (reque
 
   });
 });
-
-
-//don't think we will need: 
-// //get preferred times
-// app.get('/getPreferredTimes/:student_id', (request, result) => {
-//   let student_id = request.params.student_id;
-//   let times = `SELECT preferred_time FROM student_preferences WHERE student_id = '${student_id}'`;
-//   result.send(student_id);
-//   connection.query(times, (error, result) => {
-//     if(error) throw error;
-//     const data = result.map(t => t.preferred_time);
-//     console.log(data);
-//   });
-// });
-
 
 // get days of the week //
 app.get('/getDaysOfWeek/:student_id', (request, result) => {

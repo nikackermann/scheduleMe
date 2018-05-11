@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import logo from '../images/logo.svg';
@@ -15,6 +15,7 @@ const Login = () => (
                   src={logo}
                   className="login-logo"
                   style={{ marginBottom: '.4em' }}
+                  alt=''
                 />
                 <div className="field">
                   <div className="control">

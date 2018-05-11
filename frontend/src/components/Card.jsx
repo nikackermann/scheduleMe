@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 
-const Card = () => (
-  <div className="column">
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">Component</p>
-      </header>
-      <div className="card-content">
-        <div className="content">class information goes here?</div>
+const Card = ({ name, start, end, credits, crn, instructor, days }) => (
+    <div class="box" style={{marginTop: "1rem", marginBottom: "1rem"}}>
+      <div className="content">
+        <p>
+          <strong>{name}</strong>
+          <br />
+          Credits: {credits}
+          <br />
+          {instructor}
+          <br />
+          CRN: {crn}
+          <br />
+          {start} - {end}
+          <br />
+          {days}
+        </p>
       </div>
     </div>
-  </div>
 );
 
 export default Card;
