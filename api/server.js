@@ -14,7 +14,8 @@ const connection = mysql.createConnection({
   host: config.host,
   user: config.user,
   password: config.password,
-  database: config.database
+  database: config.database,
+  multipleStatements: true
 });
 
 // Create connection to database
@@ -90,15 +91,25 @@ const semester1 = ['CSC 152', 'MAT 112', 'ENG 110', 'INQ 101'];
 //   console.log(list)
 // }
 
+
 // create schedule
-app.get('/:userId/createSchedule', (req, res) => {
+app.get('/:studentId/createSchedule', (req, res) => {
   let studentId = req.params.studentId;
-  let sql = `SELECT * FROM courses WHERE short_name IN ('CSC 152', 'MAT 112', 'ENG 110', 'INQ 101')`;
-  let query = connection.query(sql, (error, result) => {
-    if (error) throw error;
-    console.log(result);
-    res.send(result);
-  })
+
+  let info = `SELECT morning, afternoon, evening, monday, tuesday, wednesday, thursday, friday, saturday FROM student_preferences WHERE student_id = '${studentId}'`;
+
+  let query1 = connection.query(info, (error1, result1) => {
+    if (error1) throw error1;
+
+    console.log(result1[0].monday)
+    
+    let sql = `SELECT * FROM courses WHERE short_name IN ('CSC 152', 'MAT 112', 'ENG 110', 'INQ 101')`;
+
+    let query = connection.query(sql, (error, result) => {
+      if (error) throw error;
+      res.send(result);
+    })
+  });
 });
 
 

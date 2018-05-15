@@ -61,13 +61,15 @@ class Profile extends Component {
     );
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
-    console.log(body[0]);
-    let converted = {}
-    let obj = body[0]
+    let obj = body[0];
     for (let key in obj) {
-      key: ~~obj[key]
+      if(obj[key] === 1) {
+        obj[key] = true;
+      } else {
+        obj[key] = false;
+      }
     }
-    console.log(converted);
+    console.log(obj);
     return body[0];
   }
 
@@ -208,7 +210,6 @@ class Profile extends Component {
   render() {
     return (
       <div className="container">
-        <a className="is-primary" onClick={this.fetchTimes}>Test</a>
         <h1 className="title has-text-weight-light">
           Hello, <span className="">Nik Ackermann</span>
         </h1>
@@ -241,6 +242,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="afternoon"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.afternoon}
                     />{' '}
                     Afternoon
                   </label>
@@ -250,6 +252,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="evening"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.evening}
                     />{' '}
                     Evening
                   </label>
@@ -262,6 +265,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="monday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.monday}
                     />{' '}
                     Monday
                   </label>
@@ -271,6 +275,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="tuesday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.tuesday}
                     />{' '}
                     Tuesday
                   </label>
@@ -280,6 +285,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="wednesday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.wednesday}
                     />{' '}
                     Wednesday
                   </label>
@@ -289,6 +295,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="thursday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.thursday}
                     />{' '}
                     Thursday
                   </label>
@@ -298,6 +305,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="friday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.friday}
                     />{' '}
                     Friday
                   </label>
@@ -307,6 +315,7 @@ class Profile extends Component {
                       type="checkbox"
                       name="saturday"
                       onChange={this.handleSelectInput}
+                      checked={this.state.times.saturday}
                     />{' '}
                     Saturday
                   </label>
